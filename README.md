@@ -35,3 +35,35 @@ Manages verified client identities and access control
 function registerClient(address client, string calldata identifier) external
 function verifyClient(address client) external view returns (bool)
 function updateClientStatus(address client, uint8 status) external
+
+### GreyvaultThreatTM
+Stores threat intelligence hashes and metadata
+function submitThreat(bytes32 threatHash, uint256 severity, uint256 category) external
+function getThreatData(bytes32 threatHash) external view returns (ThreatData)
+function getClientThreats(address client) external view returns (bytes32[])
+
+### GreyvaultCompliance
+Records immutable compliance scores with blockchain proof
+function submitComplianceScore(address client, uint256 score, bytes32 verification) external
+function getLatestScore(address client) external view returns (uint256, uint256, bytes32)
+function getScoreHistory(address client) external view returns (ScoreRecord[])
+
+### Verification
+Independently verify any compliance score:
+// Verify score on-chain
+const score = await greyvaultCompliance.getLatestScore(clientAddress);
+console.log(`Score: ${score[0]}, Block: ${score[1]}, Hash: ${score[2]}`);
+
+### Integration
+For API integration and real-time threat feeds, see trustcore-api.
+For aerospace-specific implementation guides, see aerospace-compliance.
+
+### Security Audits
+Self-Audit: December 2025
+Third-party audit: Pending Phase II funding
+
+### License
+Proprietary - Greyvault Intelligence, Inc. All rights reserved.
+
+### Contact
+Federal/Enterprise Partnerships: deonate@greyvaultintel.xyz
